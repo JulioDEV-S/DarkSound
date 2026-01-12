@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Sounds | YouTube Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    git remote add origin https://github.com/JulioDEV-S/DarkSound.git
+ git branch -M main 
+git push -u origin main
+</head>
+<body>
+
+    <div class="background-glow"></div>
+
+    <main class="container">
+        <header>
+            <h1>Dark <span class="gradient-text">Sounds</span></h1>
+            <p>Conversor de áudio de alta fidelidade.</p>
+        </header>
+
+        <section class="downloader-card">
+            <div class="input-group">
+                <i class="fab fa-youtube input-icon"></i>
+                <input type="text" id="videoUrl" placeholder="Cole o link do YouTube aqui...">
+            </div>
+
+            <button id="downloadBtn" onclick="getDownloadLink()">
+                <span class="btn-text">Baixar MP3</span>
+                <i class="fas fa-download"></i>
+            </button>
+
+            <div id="statusMessage" class="status"></div>
+            
+            <div id="resultArea" class="hidden">
+                <p>Pronto para download:</p>
+                <a href="#" id="downloadLink" class="download-action" target="_blank">Salvar Arquivo</a>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Dark Sounds. Powered by Web Tech.</p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
