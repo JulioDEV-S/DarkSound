@@ -5,38 +5,41 @@ async function getDownloadLink() {
     const downloadLink = document.getElementById('downloadLink');
     const btn = document.getElementById('downloadBtn');
 
-    // Validação simples
-    if (!urlInput || !urlInput.includes('youtube.com') && !urlInput.includes('youtu.be')) {
-        statusDiv.innerHTML = '<span style="color: #ff4b4b;">Por favor, insira um link válido do YouTube.</span>';
+    // URL DA SUA API NO RENDER (Troque pelo seu link real)
+    const API_BASE_URL = "https://SEU-APP.onrender.com"; 
+
+    if (!urlInput || (!urlInput.includes('youtube.com') && !urlInput.includes('youtu.be'))) {
+        statusDiv.innerHTML = '<span style="color: #ff4b4b;">Link inválido. Insira um link do YouTube.</span>';
         return;
     }
 
-    // Efeito de carregamento
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
-    statusDiv.innerHTML = 'Extraindo áudio do servidor...';
+    statusDiv.innerHTML = 'Conectando à Dark API...';
     resultArea.classList.add('hidden');
 
     try {
-        // -----------------------------------------------------------
-        // AQUI ENTRA A INTEGRAÇÃO COM A API (BACK-END)
-        // Como o GitHub Pages é estático, você usaria uma API como a RapidAPI aqui.
-        // Abaixo está uma SIMULAÇÃO de sucesso para mostrar o design.
-        // -----------------------------------------------------------
-        
-        // Simulando delay de rede (2 segundos)
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // Chama a sua API Python
+        const response = await fetch(`${API_BASE_URL}/convert?url=${encodeURIComponent(urlInput)}`);
+        const data = await response.json();
 
-        // Sucesso Simulado
-        statusDiv.innerHTML = '<span style="color: #00ff88;">Conversão concluída!</span>';
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
+        statusDiv.innerHTML = `<span style="color: #00ff88;">Sucesso: ${data.title}</span>`;
         resultArea.classList.remove('hidden');
+
+        // Configura o botão para baixar
+        // Usamos a rota /stream para forçar o download e evitar bloqueios de CORS do YouTube
+        downloadLink.href = `${API_BASE_URL}/stream?url=${encodeURIComponent(data.download_url)}`;
+        downloadLink.innerText = "Download MP3";
         
-        // Em um cenário real, a API retornaria o link do MP3 aqui:
-        downloadLink.href = "#"; // Substituir pelo link real retornado pela API
-        downloadLink.innerText = "Baixar MP3 (Demo)";
+        // Opcional: Mostrar a thumbnail
+        // Você pode criar uma tag img no HTML para exibir data.thumbnail
 
     } catch (error) {
-        statusDiv.innerHTML = 'Erro ao processar. Tente novamente.';
+        statusDiv.innerHTML = `<span style="color: #ff4b4b;">Erro: ${error.message}</span>`;
         console.error(error);
     } finally {
         btn.disabled = false;
