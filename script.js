@@ -6,7 +6,7 @@ async function getDownloadLink() {
     const btn = document.getElementById('downloadBtn');
 
     // URL DA SUA API NO RENDER (Troque pelo seu link real)
-    const API_BASE_URL = "https://SEU-APP.onrender.com"; 
+    const API_BASE_URL = "https://darksound.onrender.com"; 
 
     if (!urlInput || (!urlInput.includes('youtube.com') && !urlInput.includes('youtu.be'))) {
         statusDiv.innerHTML = '<span style="color: #ff4b4b;">Link inválido. Insira um link do YouTube.</span>';
